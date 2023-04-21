@@ -10,10 +10,11 @@ import {
 } from "../services/listService.js";
 
 const getOne = (req, res) => {
+  console.log(req.body);
   const { id } = req.body;
   getOneList(id)
     .then((result) => {
-      return res.status(200).send({ msg: "It was inserted one successfully", data: result });
+      return res.status(200).send({ msg: "It was grabbed one successfully", data: result });
     })
     .catch((err) => {
       return res.status(500).send(err);
