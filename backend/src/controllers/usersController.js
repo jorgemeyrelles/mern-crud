@@ -1,7 +1,7 @@
 import * as userServices from "../services/usersSevice.js";
 
 export const getOneUser = (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = req.query;
   userServices
     .getOneUser(username, password)
     .then((result) => {
@@ -21,7 +21,7 @@ export const getOneUser = (req, res) => {
 };
 
 export const postOneUser = (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = req.query;
   userServices
     .postOneUser(username, password)
     .then((result) => {

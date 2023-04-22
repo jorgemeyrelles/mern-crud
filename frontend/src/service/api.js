@@ -18,7 +18,19 @@ export const api = {
       const clients = await axiosInstance.request({
         method: 'GET',
         url: 'list/one',
-        data: { id: value },
+        params: { id: value },
+      });
+      return clients.data;
+    } catch (error) {
+      return error;
+    }
+  },
+  postOneContact: async (value) => {
+    try {
+      const clients = await axiosInstance.request({
+        method: 'POST',
+        url: 'list/contact',
+        params: value,
       });
       return clients.data;
     } catch (error) {

@@ -10,8 +10,7 @@ import {
 } from "../services/listService.js";
 
 const getOne = (req, res) => {
-  console.log(req.body);
-  const { id } = req.body;
+  const { id } = req.query;
   getOneList(id)
     .then((result) => {
       return res.status(200).send({ msg: "It was grabbed one successfully", data: result });
@@ -32,7 +31,7 @@ const getAll = (req, res) => {
 };
 
 const postOneToList = (req, res) => {
-  const data = req.body;
+  const data = req.query;
   postOnePerson(data)
     .then((result) => {
       return res.status(200).send({ msg: "It was created one successfully", data: result });
@@ -43,7 +42,7 @@ const postOneToList = (req, res) => {
 };
 
 const postOneToContact = (req, res) => {
-  const { tipo, descricao, idPessoa } = req.body;
+  const { tipo, descricao, idPessoa } = req.query;
   postOneContact(tipo, descricao, idPessoa)
     .then((result) => {
       return res.status(200).send({ msg: "It was created one successfully", data: result });
@@ -54,7 +53,7 @@ const postOneToContact = (req, res) => {
 };
 
 const deleteOnePerson = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
   deletePerson(id)
     .then((result) => {
       return res.status(200).send({ msg: "It was deleted one successfully", data: result });
@@ -65,7 +64,7 @@ const deleteOnePerson = (req, res) => {
 };
 
 const deleteOneContact = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
   deleteContact(id)
     .then((result) => {
       return res.status(200).send({ msg: "It was deleted one successfully", data: result });
@@ -76,7 +75,7 @@ const deleteOneContact = (req, res) => {
 };
 
 const editOnePerson = (req, res) => {
-  const { nome, cpf, id} = req.body;
+  const { nome, cpf, id} = req.query;
   updateOnePerson(nome, cpf, id)
     .then((result) => {
       return res.status(200).send({ msg: "It was edited one successfully", data: result });
@@ -87,7 +86,7 @@ const editOnePerson = (req, res) => {
 };
 
 const editOneContact = (req, res) => {
-  const { tipo, descricao, id } = req.body;
+  const { tipo, descricao, id } = req.query;
   updateOneContact(tipo, descricao, id)
     .then((result) => {
       return res.status(200).send({ msg: "It was edited one successfully", data: result });

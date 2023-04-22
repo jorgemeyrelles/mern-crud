@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import HeaderTable from '../HeaderTable';
 import { api } from '../../service/api';
+import BasicModal from '../Modal';
 
 export default function CheckboxListSecondary() {
   const [checked, setChecked] = useState([1]);
@@ -18,6 +19,7 @@ export default function CheckboxListSecondary() {
     data: [{ nome: '', id: '', descricao: '', cpf: '', tipo: '' }],
   });
   const [arr, setArr] = useState([]);
+  const [open, setOpen] = useState({ display: false, data: [] });
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -34,7 +36,8 @@ export default function CheckboxListSecondary() {
 
   const handleClickOne = (id) => {
     api.getOneFromList(id)
-      .then((response) => console.log(response));
+      .then((response) => setOpen({ display: true, data: response.data }));
+    // return setOpen({ display: true, data: res });
   };
 
   useEffect(() => {
@@ -46,7 +49,8 @@ export default function CheckboxListSecondary() {
 
   useEffect(() => {
     const check = {};
-    arr.map((e) => {
+    console.log(arr, Object.values(check));
+    arr.length > 0 && arr.map((e) => {
       return check[e.id] = e;
     });
     if (!list.valid && Object.values(check).length > 0) {
@@ -67,6 +71,8 @@ export default function CheckboxListSecondary() {
       }}
     >
       <HeaderTable />
+      {console.log(open)}
+      <BasicModal value={open} show={setOpen} />
       <List dense sx={{ width: '100%', maxWidth: '90%', maxHeight: '80%', bgcolor: 'background.paper' }}>
         {list.valid && list.data.map(({ id, nome, cpf, tipo, descricao }) => {
           const labelId = `checkbox-list-secondary-label-${id}`;
