@@ -86,23 +86,23 @@ export default function BasicModal(props) {
           {!oneMore && <Typography id="modal-modal-title" variant="h6" component="h2">
             Telefone
           </Typography>}
-          {(tel.length > 0 && !oneMore) ? tel.map((e, i) => (
+          {(tel.length > 0 && !oneMore) && tel.map((e, i) => (
             <div id={`id-${i + 1}`}>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 {e.descricao}
               </Typography>
             </div>
-          )) : "Nenhum"}
+          ))}
           {!oneMore && <Typography id="modal-modal-title" variant="h6" component="h2">
             E-mail
           </Typography>}
-          {(!oneMore && mail.length > 0) ? mail.map((e, i) => (
+          {(!oneMore && mail.length > 0) && mail.map((e, i) => (
             <div id={`id-${i + 1}`}>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 {e.descricao}
               </Typography>
             </div>
-          )) : "Nenhum"})
+          ))}
           {oneMore && (<Box
             style={{ border: '2px solid #000', borderRadius: '5px' }}
             sx={{

@@ -12,7 +12,7 @@ import HeaderTable from '../HeaderTable';
 import { api } from '../../service/api';
 import BasicModal from '../Modal';
 
-export default function CheckboxListSecondary() {
+export default function ListHome() {
   const [checked, setChecked] = useState([1]);
   const [list, setList] = useState({
     valid: false,
@@ -49,7 +49,6 @@ export default function CheckboxListSecondary() {
 
   useEffect(() => {
     const check = {};
-    console.log(arr, Object.values(check));
     arr.length > 0 && arr.map((e) => {
       return check[e.id] = e;
     });

@@ -37,4 +37,40 @@ export const api = {
       return error;
     }
   },
+  postOnePerson: async (value) => {
+    try {
+      const clients = await axiosInstance.request({
+        method: 'POST',
+        url: 'list/person',
+        params: value,
+      });
+      return clients.data;
+    } catch (error) {
+      return error;
+    }
+  },
+  getLogin: async (value) => {
+    try {
+      const clients = await axiosInstance.request({
+        method: 'GET',
+        url: 'login',
+        params: value,
+      });
+      return clients.data;
+    } catch (error) {
+      return error;
+    }
+  },
+  postRegister: async (value) => {
+    try {
+      const clients = await axiosInstance.request({
+        method: 'POST',
+        url: 'login',
+        params: value,
+      });
+      return clients.data;
+    } catch (error) {
+      return error;
+    }
+  },
 };
