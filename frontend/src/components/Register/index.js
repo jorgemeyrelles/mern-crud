@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, FormControl, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, IconButton, TextField, Typography } from '@mui/material';
 import { api } from '../../service/api';
 import { useNavigate } from 'react-router-dom';
+import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 
 // import { Container } from './styles';
 
@@ -97,6 +98,13 @@ function ToRegister() {
           >
             Registrar
           </Button>
+          <IconButton
+            onClick={() => navigate("/login")}
+            color="primary"
+            aria-label="add to shopping cart"
+          >
+            <ReplyAllIcon />
+          </IconButton>
         </div>
       </FormControl>
     </Box>
