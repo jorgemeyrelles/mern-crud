@@ -46,7 +46,7 @@ function ToRegister() {
         borderRadius: '15px',
         position: 'absolute',
         top: '20%',
-        left: '20%',
+        left: '10%',
       }}
     >
       <FormControl style={{ width: '100%' }}>
