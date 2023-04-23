@@ -5,7 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import { AppBar, Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, useMediaQuery } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import HeaderTable from '../HeaderTable';
@@ -20,6 +20,8 @@ export default function ListHome() {
   });
   const [arr, setArr] = useState([]);
   const [open, setOpen] = useState({ display: false, data: [] });
+
+  const matches = useMediaQuery('(min-width:600px)');
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -70,7 +72,6 @@ export default function ListHome() {
       }}
     >
       <HeaderTable />
-      {console.log(open)}
       <BasicModal value={open} show={setOpen} />
       <List dense sx={{ width: '100%', maxWidth: '90%', maxHeight: '80%', bgcolor: 'background.paper' }}>
         {list.valid && list.data.map(({ id, nome, cpf, tipo, descricao }) => {
@@ -94,16 +95,17 @@ export default function ListHome() {
                 style={{ maxWidth: '90%' }}
                 onClick={() => handleClickOne(id)}
               >
-                <ListItemAvatar>
+                <ListItemAvatar sx={{ width: !matches ? 24 : 40, height: !matches ? 24 : 40, marginRight: !matches && '-25px' }}>
                   <Avatar
                     alt={`${nome[0]}`}
                     src={`...`}
+                    sx={{ width: !matches ? 24 : 40, height: !matches ? 24 : 40 }}
                   />
                 </ListItemAvatar>
                 <ListItemText style={{ width: '8%' }} id={labelId} primary={nome} />
-                <ListItemText style={{ width: '8%' }} id={labelId} primary={cpf} />
-                <ListItemText style={{ width: '5%' }} id={labelId} primary={tipo} />
-                <ListItemText style={{ width: '10%' }} id={labelId} primary={descricao} />
+                {!matches && <ListItemText style={{ width: '8%' }} id={labelId} primary={cpf} />}
+                {matches && <ListItemText style={{ width: '5%' }} id={labelId} primary={tipo} />}
+                {matches && <ListItemText style={{ width: '10%' }} id={labelId} primary={descricao} />}
               </ListItemButton>
             </ListItem>
           );
