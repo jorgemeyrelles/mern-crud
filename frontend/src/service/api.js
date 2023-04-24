@@ -61,10 +61,35 @@ export const api = {
       return error;
     }
   },
+  getUser: async (value) => {
+    try {
+      const clients = await axiosInstance.request({
+        method: 'GET',
+        url: 'login/one',
+        params: value,
+        data: value,
+      });
+      return clients.data;
+    } catch (error) {
+      return error;
+    }
+  },
   postRegister: async (value) => {
     try {
       const clients = await axiosInstance.request({
         method: 'POST',
+        url: 'login',
+        params: value,
+      });
+      return clients.data;
+    } catch (error) {
+      return error;
+    }
+  },
+  postRegister: async (value) => {
+    try {
+      const clients = await axiosInstance.request({
+        method: 'PUT',
         url: 'login',
         params: value,
       });

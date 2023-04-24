@@ -67,6 +67,7 @@ export default function Header() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const data = JSON.parse(localStorage.getItem('user'));
+  const check = JSON.parse(localStorage.getItem('check'));
   
   useMemo(() => {
     if (data) {
@@ -74,7 +75,12 @@ export default function Header() {
     }
   }, [anchorEl, mobileMoreAnchorEl]);
 
-  console.log(user);
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('check'))) {
+      localStorage.clear();
+      navigate("/");
+    }
+  }, []);
 
   const handleProfileMenuOpen = () => {
     setAnchorEl((e) => !e);

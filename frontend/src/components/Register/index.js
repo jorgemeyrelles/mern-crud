@@ -3,12 +3,14 @@ import { Box, Button, FormControl, IconButton, TextField, Typography } from '@mu
 import { api } from '../../service/api';
 import { useNavigate } from 'react-router-dom';
 import ReplyAllIcon from '@mui/icons-material/ReplyAll';
+import Alerts from '../Alert';
 
 // import { Container } from './styles';
 
 function ToRegister() {
   const [insertOne, setInsertOne] = useState({ username: '', password: '', repetePassword: '' });
   const [valid, setValid] = useState(true);
+  const [err, setErr] = useState({ alert: false, value: { title: '', type: '', msg: '' } });
 
   const navigate = useNavigate();
 
@@ -17,23 +19,51 @@ function ToRegister() {
     const checkPassword = password.length >=6 && password.length <= 8;
     const checkUsername = username.length >= 6 && username.length <= 15;
     const checkRepete = password === repetePassword;
+    if (err.alert) {
+      setErr(({ alert: false, value: { title: '', type: '', msg: '' } }));
+    }
     if (checkPassword && checkUsername && checkRepete) {
       setValid(false);
     }
   }, [insertOne]);
 
-  console.log(insertOne.username, insertOne.password, insertOne.repetePassword, insertOne.password === insertOne.repetePassword);
-
   const handleChange = ({ name, value }) => {
     setInsertOne((e) => ({ ...e, [name]: value }));
   };
 
+  const checkUserExist = async (e) => {
+    const response = await api.getUser(e);
+    if (response.message === 'User exist' || response.name === 'AxiosError') {
+      setErr({ alert: true, value: {
+        title: "Erro ao registrar",
+        type: "error",
+        msg: "usuário já existe!",
+      } });
+      return navigate("/register");
+    };
+    return e;
+  };
+
+  const goToRegister = async (e) => {
+    const res = await api.postRegister(e);
+    if (res.name === 'AxiosError') {
+      setErr({ alert: true, value: {
+        title: "Erro ao registrar",
+        type: "error",
+        msg: "Entrar em contato com administrador!",
+      } });
+      return navigate("/register");
+    };
+    localStorage.setItem('user', JSON.stringify({ data: e }));
+    localStorage.setItem('check', true);
+    return navigate("/home");
+  };
+
   const handleClick = (e) => {
     if (e.username !== '') {
-      api.postRegister(e)
-        .then((response) => localStorage.setItem('user', JSON.stringify(response)));
-      localStorage.setItem('check', true);
-      navigate("/home");
+      checkUserExist(e);
+      const register = goToRegister(e);
+      return register;
     }
   };
 
@@ -107,6 +137,12 @@ function ToRegister() {
           </IconButton>
         </div>
       </FormControl>
+      {err.alert && (
+      <Alerts
+        title={err.value.title}
+        type={err.value.type}
+        msg={err.value.msg}
+      />)}
     </Box>
   );
 }

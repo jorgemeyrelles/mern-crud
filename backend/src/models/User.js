@@ -10,6 +10,16 @@ const findOne = (nome, password) => {
   });
 };
 
+const findOneByName = (nome) => {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM usuario WHERE `username` = ?";
+
+    db.execute(query, [nome])
+      .then((result) => resolve(result))
+      .catch((err) => reject(err));
+  });
+};
+
 const createOne = (nome, password) => {
   return new Promise((resolve, reject) => {
     const query = "INSERT INTO usuario (username, password) VALUES (?, ?)";
@@ -20,4 +30,4 @@ const createOne = (nome, password) => {
   });
 };
 
-export { findOne, createOne };
+export { findOne, createOne, findOneByName };

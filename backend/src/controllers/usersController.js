@@ -1,12 +1,11 @@
 import * as userServices from "../services/usersSevice.js";
 
-export const getOneUser = (req, res) => {
+const getOneUser = (req, res) => {
   const { username, password } = req.query;
   userServices
     .getOneUser(username, password)
     .then((result) => {
       const [dataUser] = result;
-      console.log('controller', dataUser);
       if (dataUser.length === 0) {
         return res.status(500).send({ msg: "User was not found out", data: dataUser });
       }
@@ -20,7 +19,7 @@ export const getOneUser = (req, res) => {
     });
 };
 
-export const postOneUser = (req, res) => {
+const postOneUser = (req, res) => {
   const { username, password } = req.query;
   userServices
     .postOneUser(username, password)
@@ -35,3 +34,24 @@ export const postOneUser = (req, res) => {
       res.status(500).send(err);
     });
 };
+
+const getCheckOneUser = (req, res) => {
+  const { username } = req.body;
+  userServices
+    .getCheckUser(username)
+    .then((result) => {
+      const [dataUser] = result;
+      if (dataUser.length !== 0) {
+        return res.status(500).json({
+          message: "User exist",
+          data: dataUser[0],
+        });
+      }
+      return res.status(200).send({ msg: "User does not exist", data: req.query });
+    })
+    .catch((err) => {
+      return res.status(500).send(err);
+    });
+};
+
+export { getOneUser, postOneUser, getCheckOneUser };

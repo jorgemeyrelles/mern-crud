@@ -34,7 +34,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 export default function InsertButton() {
   const [open, setOpen] = useState(false);
-  const [insertOne, setInsertOne] = useState({ nome: '', cpf: '', tipo: 'Telefone', descricao: '' });
+  const [insertOne, setInsertOne] = useState({
+    nome: '',
+    cpf: '',
+    tipo: 'Telefone',
+    descricao: '',
+  });
   
   const handleTooltipClose = () => {
     setOpen(false);
@@ -49,12 +54,10 @@ export default function InsertButton() {
   };
 
   const handleClick = (e) => {
-    console.log(e.nome);
     if (e.nome !== '') {
       api.postOnePerson(e)
         .then((response) => console.log(response));
     }
-    console.log(e);
     setOpen(false);
   };
 
@@ -64,13 +67,13 @@ export default function InsertButton() {
         spacing={2}
         style={{
           position: 'absolute',
-          left: '10%',
+          right: '10%',
           marginTop: '3%',
         }}
       >
         <HtmlTooltip
           // onClose={handleTooltipClose}
-          placement="right-end"
+          placement="bottom-start"
           open={open}
           title={
             <div>
