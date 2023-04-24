@@ -86,7 +86,7 @@ export const api = {
       return error;
     }
   },
-  postRegister: async (value) => {
+  editUser: async (value) => {
     try {
       const clients = await axiosInstance.request({
         method: 'PUT',

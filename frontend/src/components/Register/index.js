@@ -46,6 +46,7 @@ function ToRegister() {
 
   const goToRegister = async (e) => {
     const res = await api.postRegister(e);
+    console.log(res, e);
     if (res.name === 'AxiosError') {
       setErr({ alert: true, value: {
         title: "Erro ao registrar",

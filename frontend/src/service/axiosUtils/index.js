@@ -13,7 +13,7 @@ const environment = {
 console.log(environment[NODE_ENV]);
 
 export const axiosInstance = axios.create({
-  baseURL: REACT_APP_API,
+  baseURL: environment[NODE_ENV],
   headers: {
     'Content-type': 'application/json',
   },
