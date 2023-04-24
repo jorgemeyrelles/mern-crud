@@ -36,7 +36,7 @@ const postOneUser = (req, res) => {
 };
 
 const getCheckOneUser = (req, res) => {
-  const { username } = req.body;
+  const { username } = req.query;
   userServices
     .getCheckUser(username)
     .then((result) => {
