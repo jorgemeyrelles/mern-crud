@@ -25,7 +25,6 @@ app.use("/api/v1", indexRouter);
 app.use((err, _req, res, _next) => {
   if (err instanceof AppError) {
     const { message, httpStatusCode } = err;
-    console.log(message);
     return res.status(httpStatusCode).json({ message });
   }
   return res.status(500).json({ msg: `Internal server error - ${err.message}` });

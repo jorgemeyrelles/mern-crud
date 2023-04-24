@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  useMediaQuery,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
@@ -22,7 +23,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 300,
   bgcolor: 'background.paper',
   border: '2px solid #1976d2',
   borderRadius: '10px',
@@ -36,6 +37,7 @@ export default function BasicModal(props) {
   const [insertOne, setInsertOne] = useState({ tipo: 'Telefone', descricao: '' });
   const [oneMore, setOneMore] = useState(false);
   const handleClose = () => show({ display: false, data: [] });
+  const matches = useMediaQuery('(min-width:600px)');
 
   const { value, show } = props;
   useEffect(() => {
@@ -53,11 +55,37 @@ export default function BasicModal(props) {
   };
 
   const handleClick = (send) => {
-    console.log({ ...send, ...insertOne });
     if (send.descricao !== '') {
       api.postOneContact({ ...send, ...insertOne })
     }
     setOneMore(false);
+  };
+
+  const ButtonVar = () => {
+    if (matches) {
+      return (
+        <Button
+          color="primary"
+          variant="outlined"
+          endIcon={<ControlPointIcon />}
+          onClick={() => setOneMore(true)}
+          style={{ padding: '10px', position: 'absolute', right: '2%' }}
+        >
+          Incluir
+        </Button>
+      );
+    }
+    return (
+      <IconButton
+        color="primary"
+        aria-label="insert contact"
+        component="label"
+        onClick={() => setOneMore(true)}
+        style={{ padding: '10px', position: 'absolute', right: '10%' }}
+      >
+        <ControlPointIcon sx={{ fontSize: 40 }} />
+      </IconButton>
+    );
   };
 
   return (
@@ -69,17 +97,7 @@ export default function BasicModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {!oneMore && (
-          <Button
-            color="primary"
-            variant="outlined"
-            endIcon={<ControlPointIcon />}
-            onClick={() => setOneMore(true)}
-            style={{ padding: '10px', position: 'absolute', right: '2%' }}
-          >
-            Incluir
-          </Button>)}
-          {console.log(value)}
+          {!oneMore && (ButtonVar())}
           <Typography id="modal-modal-title" variant="h5" component="h2">
             {value.display && value.data[0].nome}
           </Typography>

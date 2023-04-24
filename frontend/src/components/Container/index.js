@@ -8,7 +8,7 @@ import { GlobalContext } from '../../Context/StageGlobal';
 export default function MainContainer({children}) {
   const { login } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const check = localStorage.getItem('check') && JSON.parse(localStorage.getItem('check'));
+  const check = localStorage.getItem('check') && JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     if (check !== null && !check) {
       navigate("/login");
@@ -18,7 +18,7 @@ export default function MainContainer({children}) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
           {children}
         </Box>

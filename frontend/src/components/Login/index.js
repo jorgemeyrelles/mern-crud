@@ -5,12 +5,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../service/api';
 import { GlobalContext } from '../../Context/StageGlobal';
+import Alerts from '../Alert';
 
 // import { Container } from './styles';
 
 function ToLogin() {
   const [insertOne, setInsertOne] = useState({ username: '', password: '' });
   const [valid, setValid] = useState(true);
+  const [err, setErr] = useState({ alert: false, value: { title: '', type: '', msg: '' } });
   const { setLogin } = useContext(GlobalContext);
 
   const navigate = useNavigate();
@@ -19,6 +21,9 @@ function ToLogin() {
     const { username, password } = insertOne;
     const checkPassword = password.length >=6 && password.length <= 8;
     const checkUsername = username.length >= 6 && username.length <= 15;
+    if (err.alert) {
+      setErr(({ alert: false, value: { title: '', type: '', msg: '' } }));
+    }
     if (checkPassword && checkUsername) {
       setValid(false);
     } else {
@@ -32,15 +37,32 @@ function ToLogin() {
 
   const handleClick = (e) => {
     try {
+      setErr({ alert: false, value: { title: '', type: '', msg: '' } });
       if (e.username !== '') {
         api.getLogin(e)
-          .then((response) => localStorage.setItem('user', JSON.stringify(response)));
-        localStorage.setItem('check', true);
-        setLogin(true);
-        navigate("/home");
+          .then((response) => {
+            if (response.name === 'AxiosError') {
+              setErr({ alert: true, value: {
+                title: "Erro ao logar",
+                type: "error",
+                msg: "username/password incorreto(s)",
+              } });
+              throw Error;
+            };
+            localStorage.setItem('user', JSON.stringify(response));
+            localStorage.setItem('check', true);
+            setLogin(true);
+            navigate("/home");
+          });
       }
     } catch (error) {
       console.error(error);
+      setErr({ alert: true, value: {
+        title: "Erro ao logar",
+        type: "error",
+        msg: "username/password incorreto(s)",
+      } });
+      navigate("/");
     }
   };
 
@@ -100,6 +122,12 @@ function ToLogin() {
           </Button>
         </div>
       </FormControl>
+      {err.alert && (
+      <Alerts
+        title={err.value.title}
+        type={err.value.type}
+        msg={err.value.msg}
+      />)}
     </Box>
   );
 }
