@@ -67,7 +67,7 @@ export default function InsertButton() {
         spacing={2}
         style={{
           position: 'absolute',
-          right: '10%',
+          right: '20%',
           marginTop: '3%',
         }}
       >
@@ -111,12 +111,12 @@ export default function InsertButton() {
                   onChange={(e) => handleChange(e.target)}
                 >
                   <FormControlLabel name="tipo" value="Telefone" control={<Radio />} label="Telefone" />
-                  <FormControlLabel name="tipo" value="E-mail" control={<Radio />} label="E-mail" />
+                  <FormControlLabel name="tipo" value="Email" control={<Radio />} label="E-mail" />
                 </RadioGroup>
                 <div style={{ display: 'flex', width: '100%' }}>
                   <TextField
                     style={{ padding: '10px' }}
-                    type={insertOne.tipo === 'E-mail' ? "email" : "number"} 
+                    type={insertOne.tipo === 'Email' ? "email" : "number"} 
                     onChange={(e) => handleChange(e.target)}
                     id="outlined-basic"
                     name="descricao"

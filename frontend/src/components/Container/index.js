@@ -4,11 +4,15 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../Context/StageGlobal';
+import { useMediaQuery } from '@mui/material';
 
 export default function MainContainer({children}) {
   const { login } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const check = localStorage.getItem('check') && JSON.parse(localStorage.getItem('user'));
+
+  const matches = useMediaQuery('(min-width:1200px)');
+
+  const check = localStorage.getItem('check');
   useEffect(() => {
     if (check !== null && !check) {
       navigate("/login");
@@ -18,8 +22,10 @@ export default function MainContainer({children}) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="xl">
-        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
+      <Container style={{ maxWidth: matches && 'none' }} maxWidth="xl">
+        <Box
+          sx={{ bgcolor: '#cfe8fc', height: '100vh' }}
+        >
           {children}
         </Box>
       </Container>
