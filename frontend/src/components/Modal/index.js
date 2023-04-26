@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -17,6 +17,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import CloseIcon from '@mui/icons-material/Close';
 import { api } from '../../service/api';
+import { GlobalContext } from '../../Context/StageGlobal';
 
 const style = {
   position: 'absolute',
@@ -36,6 +37,7 @@ export default function BasicModal(props) {
   const [mail, setMail] = useState(false);
   const [insertOne, setInsertOne] = useState({ tipo: 'Telefone', descricao: '' });
   const [oneMore, setOneMore] = useState(false);
+  const { setNewInList } = useContext(GlobalContext);
   const handleClose = () => show({ display: false, data: [] });
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -51,12 +53,14 @@ export default function BasicModal(props) {
   }, [props]);
 
   const handleChange = ({ name, value }) => {
+    setNewInList(name, value);
     setInsertOne((e) => ({ ...e, [name]: value }));
   };
 
   const handleClick = (send) => {
     if (send.descricao !== '') {
-      api.postOneContact({ ...send, ...insertOne })
+      api.postOneContact({ ...send, ...insertOne });
+      setNewInList('one');
     }
     setOneMore(false);
   };
@@ -96,7 +100,7 @@ export default function BasicModal(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} style={{ width: matches && 350 }}>
           {!oneMore && (ButtonVar())}
           <Typography id="modal-modal-title" variant="h5" component="h2">
             {value.display && value.data[0].nome}
@@ -144,11 +148,11 @@ export default function BasicModal(props) {
                 onChange={(e) => handleChange(e.target)}
               >
                 <FormControlLabel name="tipo" value="Telefone" control={<Radio />} label="Telefone" />
-                <FormControlLabel name="tipo" value="E-mail" control={<Radio />} label="E-mail" />
+                <FormControlLabel name="tipo" value="Email" control={<Radio />} label="E-mail" />
               </RadioGroup>
               <div style={{ display: 'flex', width: '100%' }}>
                 <TextField
-                  type={insertOne.tipo === 'E-mail' ? "email" : "number"}
+                  type={insertOne.tipo === 'Email' ? "email" : "number"}
                   sx="xl"
                   onChange={(e) => handleChange(e.target)}
                   id="outlined-basic"

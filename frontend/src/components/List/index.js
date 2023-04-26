@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,6 +11,7 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import HeaderTable from '../HeaderTable';
 import { api } from '../../service/api';
 import BasicModal from '../Modal';
+import { GlobalContext } from '../../Context/StageGlobal';
 
 export default function ListHome() {
   const [checked, setChecked] = useState([1]);
@@ -20,6 +21,8 @@ export default function ListHome() {
   });
   const [arr, setArr] = useState([]);
   const [open, setOpen] = useState({ display: false, data: [] });
+
+  const { newInList } = useContext(GlobalContext);
 
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -47,7 +50,8 @@ export default function ListHome() {
       .then((response) => {
         setArr(response.data);
       });
-  }, []);
+  }, [newInList]);
+  console.log(newInList);
 
   useEffect(() => {
     const check = {};
