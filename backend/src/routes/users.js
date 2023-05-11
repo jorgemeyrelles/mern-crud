@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import {
+  getAllUsers,
   getCheckOneUser,
   getOneUser,
   postOneUser
@@ -8,7 +9,7 @@ import {
 
 const userRouter = Router();
 
-userRouter.get("/", getOneUser);
+userRouter.get("/", getAllUsers);
 userRouter.get("/one", getCheckOneUser);
 userRouter.post("/", postOneUser);
 
