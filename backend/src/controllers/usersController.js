@@ -1,3 +1,4 @@
+import { getAllUsersModel } from "../models/User.js";
 import * as userServices from "../services/usersSevice.js";
 
 const getOneUser = (req, res) => {
@@ -54,4 +55,10 @@ const getCheckOneUser = (req, res) => {
     });
 };
 
-export { getOneUser, postOneUser, getCheckOneUser };
+const getAllUsers = async (req, res) => {
+  const response = await getAllUsersModel();
+  const [first] = response;
+  return res.status(200).send(first);
+};
+
+export { getOneUser, postOneUser, getCheckOneUser, getAllUsers };

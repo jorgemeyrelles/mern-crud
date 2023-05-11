@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,7 +13,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { GlobalContext } from '../../Context/StageGlobal';
 import { useNavigate } from 'react-router-dom';
 import { ClickAwayListener } from '@mui/material';
 
@@ -61,26 +60,18 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
   const [user, setUser] = useState('Mundo');
-  const { login } = useContext(GlobalContext);
+
   const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const data = JSON.parse(localStorage.getItem('user'));
-  const check = JSON.parse(localStorage.getItem('check'));
   
   useMemo(() => {
     if (data) {
       setUser(data.data.username);
     }
   }, [anchorEl, mobileMoreAnchorEl]);
-
-  useEffect(() => {
-    if (!JSON.parse(localStorage.getItem('check'))) {
-      localStorage.clear();
-      navigate("/");
-    }
-  }, []);
 
   const handleProfileMenuOpen = () => {
     setAnchorEl((e) => !e);
@@ -96,7 +87,6 @@ export default function Header() {
   };
 
   const handleExit = () => {
-    localStorage.getItem('check', false);
     localStorage.clear();
     navigate("/login");
   };

@@ -1,3 +1,4 @@
+import { getAllUsersModel } from "../models/User.js";
 import {
   deleteContact,
   deletePerson,
