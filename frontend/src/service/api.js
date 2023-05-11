@@ -53,7 +53,7 @@ export const api = {
     try {
       const clients = await axiosInstance.request({
         method: 'GET',
-        url: 'login',
+        url: 'login/one',
         params: value,
       });
       return clients.data;

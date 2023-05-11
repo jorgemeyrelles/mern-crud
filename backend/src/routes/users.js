@@ -10,7 +10,7 @@ import {
 const userRouter = Router();
 
 userRouter.get("/", getAllUsers);
-userRouter.get("/one", getCheckOneUser);
+userRouter.get("/one", getOneUser);
 userRouter.post("/", postOneUser);
 
 export default userRouter;

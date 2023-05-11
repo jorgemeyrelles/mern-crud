@@ -53,7 +53,7 @@ export default function BasicModal(props) {
   }, [props]);
 
   const handleChange = ({ name, value }) => {
-    setNewInList(name, value);
+    setNewInList(value);
     setInsertOne((e) => ({ ...e, [name]: value }));
   };
 

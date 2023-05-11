@@ -41,6 +41,7 @@ function ToLogin() {
       if (e.username !== '') {
         api.getLogin(e)
           .then((response) => {
+            console.log(response);
             if (response.name === 'AxiosError') {
               setErr({ alert: true, value: {
                 title: "Erro ao logar",
@@ -65,7 +66,7 @@ function ToLogin() {
       navigate("/");
     }
   };
-
+  console.log(insertOne);
   return (
     <Box
       style={{
