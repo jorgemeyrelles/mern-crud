@@ -109,6 +109,7 @@ function ToLogin() {
         <div style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
           <Button
             variant="contained"
+            type='submit'
             onClick={() => handleClick(insertOne)}
             disabled={valid}
           >
