@@ -12,10 +12,15 @@ export default function MainContainer({children}) {
 
   const matches = useMediaQuery('(min-width:1200px)');
 
-  const check = localStorage.getItem('check');
+  const check = JSON.parse(localStorage.getItem('check'));
+  const pathname = window.location.pathname === "/register";
   useEffect(() => {
-    if (check !== null && !check) {
+    if ((check === null && !check) && !pathname) {
+      localStorage.clear();
       navigate("/login");
+    }
+    if (check) {
+      navigate("/home");
     }
   }, [check]);
   

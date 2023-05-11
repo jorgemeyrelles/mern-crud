@@ -20,6 +20,17 @@ const findOneByName = (nome) => {
   });
 };
 
+const getAllUsersModel = () => {
+  const res = new Promise((resolve, reject) => {
+    const query = "SELECT * FROM usuario";
+
+    db.execute(query)
+      .then((result) => resolve(result))
+      .catch((err) => reject(err));
+  });
+  return res;
+};
+
 const createOne = (nome, password) => {
   return new Promise((resolve, reject) => {
     const query = "INSERT INTO usuario (username, password) VALUES (?, ?)";
@@ -30,4 +41,4 @@ const createOne = (nome, password) => {
   });
 };
 
-export { findOne, createOne, findOneByName };
+export { findOne, createOne, findOneByName, getAllUsersModel };

@@ -8,6 +8,7 @@ function GlobalProvider({ children }) {
   const [newInList, setNewInList] = useState('');
   const [newContact, setNewContact] = useState('');
   const [login, setLogin] = useState(false);
+
   const value = {
     newInList,
     setNewInList,
@@ -15,7 +16,8 @@ function GlobalProvider({ children }) {
     setNewContact,
     login,
     setLogin
-  }
+  };
+
   return (
     <GlobalContext.Provider value={value}>
       {children}
