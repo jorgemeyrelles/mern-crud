@@ -68,7 +68,7 @@ export default function Header() {
   const data = JSON.parse(localStorage.getItem('user'));
   
   useMemo(() => {
-    if (data) {
+    if (data.data.username) {
       setUser(data.data.username);
     }
   }, [anchorEl, mobileMoreAnchorEl]);
