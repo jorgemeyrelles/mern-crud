@@ -12,6 +12,7 @@ import HeaderTable from '../HeaderTable';
 import { api } from '../../service/api';
 import BasicModal from '../Modal';
 import { GlobalContext } from '../../Context/StageGlobal';
+import { DataGrid } from '@mui/x-data-grid';
 
 export default function ListHome() {
   const [checked, setChecked] = useState([1]);
@@ -51,7 +52,6 @@ export default function ListHome() {
         setArr(response.data);
       });
   }, [newInList]);
-  console.log(newInList);
 
   useEffect(() => {
     const check = {};
@@ -64,7 +64,42 @@ export default function ListHome() {
         data: Object.values(check),
       })
     }
-  }, [arr]);
+  }, [arr, newInList]);
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: 'nome',
+      headerName: 'Nome',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'cpf',
+      headerName: 'CPF',
+      type: 'number',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'tipo',
+      headerName: 'Tipo',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'descricao',
+      headerName: 'Contato',
+      description: 'Pode haver mais de um tipo de contato. Acesse o usuário.',
+      sortable: false,
+      width: 160,
+    },
+  ];
+
+  const rows = list.valid && list.data.map(({ id, nome, cpf, tipo, descricao }) => (
+    { id, nome, cpf, tipo, descricao }
+  ));
+  console.log(rows, list);
 
   return (
     <Box style={{

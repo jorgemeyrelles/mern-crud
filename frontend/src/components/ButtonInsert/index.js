@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { api } from '../../service/api';
+import { GlobalContext } from '../../Context/StageGlobal';
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -40,6 +41,7 @@ export default function InsertButton() {
     tipo: 'Telefone',
     descricao: '',
   });
+  const { setNewInList } = useContext(GlobalContext);
   
   const handleTooltipClose = () => {
     setOpen(false);
@@ -57,6 +59,7 @@ export default function InsertButton() {
     if (e.nome !== '') {
       api.postOnePerson(e)
         .then((response) => console.log(response));
+      setNewInList('one');
     }
     setOpen(false);
   };

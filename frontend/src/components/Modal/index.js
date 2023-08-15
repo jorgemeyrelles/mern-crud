@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -17,7 +17,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import CloseIcon from '@mui/icons-material/Close';
 import { api } from '../../service/api';
-import { GlobalContext } from '../../Context/StageGlobal';
 
 const style = {
   position: 'absolute',
@@ -37,7 +36,6 @@ export default function BasicModal(props) {
   const [mail, setMail] = useState(false);
   const [insertOne, setInsertOne] = useState({ tipo: 'Telefone', descricao: '' });
   const [oneMore, setOneMore] = useState(false);
-  const { setNewInList } = useContext(GlobalContext);
   const handleClose = () => show({ display: false, data: [] });
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -53,14 +51,13 @@ export default function BasicModal(props) {
   }, [props]);
 
   const handleChange = ({ name, value }) => {
-    setNewInList(name, value);
     setInsertOne((e) => ({ ...e, [name]: value }));
   };
 
   const handleClick = (send) => {
     if (send.descricao !== '') {
       api.postOneContact({ ...send, ...insertOne });
-      setNewInList('one');
+      handleClose();
     }
     setOneMore(false);
   };
